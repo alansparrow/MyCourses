@@ -6,6 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -32,7 +35,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyCoursesApp() {
     MyCoursesTheme() {
-        TopicList(topicList = DataSource.topics)
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+//            TopicList(DataSource.topics)
+            TopicGrid(DataSource.topics)
+        }
     }
 }
 
@@ -41,6 +47,20 @@ fun TopicList(topicList: List<Topic>, modifier: Modifier = Modifier) {
     LazyColumn() {
         items(topicList) { topic ->
             TopicCard(topic = topic)
+        }
+    }
+}
+
+@Composable
+fun TopicGrid(topicList: List<Topic>, modifier: Modifier = Modifier) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.padding(8.dp)
+    ) {
+        items(topicList) { topic ->
+            TopicCard(topic)
         }
     }
 }
